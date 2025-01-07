@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy and Open Instagram</title>
+    <style>
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3897f0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <p id="textToCopy">Hello, this is a sample text!</p>
+    <button onclick="copyAndRedirect()">Copy and Send on Instagram</button>
+
+    <script>
+        function copyAndRedirect() {
+            const text = document.getElementById("textToCopy").innerText;
+
+            // Copy text to clipboard
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Text copied: " + text);
+
+                // Attempt to open Instagram app
+                const instagramAppUrl = "instagram://direct";
+                const fallbackUrl = "https://www.instagram.com/direct/inbox/";
+
+                // Open Instagram app
+                const start = Date.now();
+                window.location.href = instagramAppUrl;
+
+                // Fallback to browser if the app is not installed
+                setTimeout(() => {
+                    if (Date.now() - start < 2000) {
+                        window.location.href = fallbackUrl;
+                    }
+                }, 1500);
+            }).catch(err => {
+                alert("Failed to copy text: " + err);
+            });
+        }
+    </script>
+</body>
+</html>
